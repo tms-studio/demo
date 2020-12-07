@@ -1,0 +1,9 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/tms-studio/demo-frontend.git
+[submodule "backend"]
+	path = backend
+	url = https://github.com/tms-studio/demo-backend.git
+[submodule "accounts"]
+	path = accounts
+	url = https://github.com/tms-studio/demo-accounts.git
