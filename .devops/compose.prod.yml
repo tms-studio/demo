@@ -1,0 +1,52 @@
+version: "3"
+
+
+services:
+  frontend:
+    image: tmsstudio/demo-frontend
+    env_file:
+      - production.env
+    networks:
+      - www
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.http.routers.demo-frontend.rule: "Host(`demo.sylvan.ovh`)"
+        traefik.http.services.demo-frontend.loadbalancer.server.port: "8080"
+        traefik.docker.network: "www"
+
+
+  backend:
+    image: tmsstudio/demo-backend
+    env_file:
+      - production.env
+    networks:
+      - www
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.http.routers.demo-backend.rule: "Host(`api.demo.sylvan.ovh`)"
+        traefik.http.services.demo-backend.loadbalancer.server.port: "8000"
+        traefik.docker.network: "www"
+
+  
+  accounts:
+    image: tmsstudio/demo-accounts
+    env_file:
+      - production.env
+    networks:
+      - www
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.http.routers.demo-accounts.rule: "Host(`accounts.demo.sylvan.ovh`)"
+        traefik.http.services.demo-accounts.loadbalancer.server.port: "8000"
+        traefik.docker.network: "www"
+  
+  database:
+    image: mongo:3
+
+
+networks:
+  www:
+    external: true
