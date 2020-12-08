@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  frontend:
+    build: 
+      context: frontend/
+      args:
+        MODE: development
+    ports:
+      - 8080:8080
+    environment:
+      ACCOUNTS_URL: http://accounts.production.new
+      BACKEND_URL: http://backend.production.new
+    volumes:
+      - ./frontend:/app
+
+  backend:
+    build:
+      context: backend/
+      args:
+        MODE: development
+    ports:
+      - 8081:8000
+    volumes:
+      - ./backend:/app
+
+  accounts:
+    build: 
+      context: accounts/
+      args:
+        MODE: development
+    ports:
+      - 8082:8000
+    environment:
+      FRONTEND_URL: http://frontend.production.new
+      BACKEND_URL: http://backend.production.new
+    volumes:
+      - ./backend:/app
+  
+  database:
+    image: mongo:3
